@@ -8,9 +8,9 @@ interface RoomsRepository {
     suspend fun getRoomById(id: Int): Room?
     suspend fun deleteRoomById(id: Int): Boolean
 
-    suspend fun addUserToRoom(roomName: String, vararg userIds: String): Boolean
-    suspend fun deleteUserFromRoom(userId: String, roomName: String): Boolean
-    suspend fun addUsersToAdmins(vararg userIds: List<Int>): Boolean
+    suspend fun addUserToRoom(roomId: Int, vararg userIds: Int): Boolean
+    suspend fun deleteUserFromRoom(userId: Int, roomId: Int): Boolean
+    suspend fun addUsersToAdmins(roomId: Int, vararg userIds: Int): Boolean
     suspend fun getUserRooms(userId: Int): List<Room>
 
     suspend fun createQueue(queue: Queue): Boolean
