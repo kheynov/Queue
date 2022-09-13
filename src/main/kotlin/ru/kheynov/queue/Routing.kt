@@ -1,10 +1,9 @@
 package ru.kheynov.queue
 
-import io.ktor.server.routing.*
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
-import io.ktor.server.request.*
+import io.ktor.server.routing.*
+import ru.kheynov.queue.api.v1.v1Routes
 
 fun Application.configureRouting() {
 
@@ -12,5 +11,6 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+        v1Routes()
     }
 }

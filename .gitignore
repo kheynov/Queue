@@ -8,6 +8,8 @@ build/
 
 .env
 
+localvolumes/
+
 ### STS ###
 .apt_generated
 .classpath

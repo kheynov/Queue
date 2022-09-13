@@ -7,8 +7,6 @@ import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit =
@@ -45,11 +43,5 @@ fun Application.configureMonitoring() {
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
         json()
-    }
-
-    routing {
-        get("/json/kotlinx-serialization") {
-            call.respond(mapOf("hello" to "world"))
-        }
     }
 }
