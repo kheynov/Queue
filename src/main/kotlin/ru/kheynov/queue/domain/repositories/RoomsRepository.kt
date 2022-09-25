@@ -13,6 +13,7 @@ interface RoomsRepository {
     suspend fun addUsersToAdmins(roomId: Int, vararg userIds: Int): Boolean
     suspend fun getUserRooms(userId: Int): List<Room>
 
-    suspend fun createQueue(queue: Queue): Boolean
-    suspend fun deleteQueueById(id: Int): Boolean
+    suspend fun createQueue(roomId: Int, queue: Queue): Boolean
+    suspend fun deleteQueueById(roomId: Int, queueName: String): Boolean
+    suspend fun getRoomQueues(roomId: Int): List<Queue>?
 }

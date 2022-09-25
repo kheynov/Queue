@@ -55,12 +55,26 @@ class MongoRoomsRepositoryImpl(
         return rooms.find(Room::userIds contains userId).toList()
     }
 
-    override suspend fun createQueue(queue: Queue): Boolean {
-        TODO()
+    override suspend fun createQueue(roomId: Int, queue: Queue): Boolean {
+        if (rooms.findOne(Room::id eq roomId) == null) return false
+        val queuesList = rooms.findOne(Room::id eq roomId)?.queues?.toMutableList() ?: return false
+        queuesList.add(queue)
+        return rooms.updateOne(Room::id eq roomId, setValue(Room::queues, queuesList)).wasAcknowledged()
+
     }
 
-    override suspend fun deleteQueueById(id: Int): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun deleteQueueById(roomId: Int, queueName: String): Boolean {
+        if (rooms.findOne(Room::id eq roomId) == null) return false
+        val queues = rooms.findOne(Room::id eq roomId)?.queues?.toMutableList() ?: return false
+        var isSuccessful = queues.remove(queues.find { it.name == queueName })
+        if (isSuccessful) {
+            isSuccessful = rooms.updateOne(Room::id eq roomId, setValue(Room::queues, queues)).wasAcknowledged()
+        }
+        return isSuccessful
+    }
+
+    override suspend fun getRoomQueues(roomId: Int): List<Queue>? {
+        return rooms.find(Room::id eq roomId).first()?.queues
     }
 
 }
