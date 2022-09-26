@@ -60,7 +60,6 @@ class MongoRoomsRepositoryImpl(
         val queuesList = rooms.findOne(Room::id eq roomId)?.queues?.toMutableList() ?: return false
         queuesList.add(queue)
         return rooms.updateOne(Room::id eq roomId, setValue(Room::queues, queuesList)).wasAcknowledged()
-
     }
 
     override suspend fun deleteQueueById(roomId: Int, queueName: String): Boolean {
