@@ -6,6 +6,7 @@ services:
       - "${SERVER_PORT}:${SERVER_PORT}"
     environment:
       - SERVER_PORT=$SERVER_PORT
+      - MONGO_CONNECTION_STRING=$MONGO_CONNECTION_STRING
     depends_on:
       - db
     networks:
