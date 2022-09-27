@@ -13,13 +13,17 @@ class MongoUserRepositoryImpl(db: CoroutineDatabase) : UserRepository {
         return users.insertOne(user).wasAcknowledged()
     }
 
-    override suspend fun deleteUser(vkID: String): Boolean {
+    override suspend fun deleteUser(vkID: Int): Boolean {
         val user = users.findOne(User::vkID eq vkID) ?: return false
         return users.deleteOne(User::vkID eq user.vkID).wasAcknowledged()
     }
 
-    override suspend fun checkIfUserRegistered(vkID: String): Boolean {
+    override suspend fun checkIfUserRegistered(vkID: Int): Boolean {
         return users.findOne(User::vkID eq vkID) != null
+    }
+
+    override suspend fun getUserInfo(vkID: Int): User? {
+        return users.findOne(User::vkID eq vkID)
     }
 
 }

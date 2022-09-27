@@ -3,7 +3,9 @@ package ru.kheynov.queue.domain.use_cases.users
 import ru.kheynov.queue.domain.repositories.UserRepository
 
 class DeleteUserUseCase(
-    userRepository: UserRepository,
+    private val userRepository: UserRepository,
 ) {
-    //TODO
+    suspend operator fun invoke(vkId: Int): Boolean {
+        return userRepository.deleteUser(vkId)
+    }
 }

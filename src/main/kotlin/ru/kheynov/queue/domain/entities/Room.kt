@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Room(
-    val id: Int,
+    val id: Long,
     val pass: String,
     val name: String,
     @SerialName("user_ids") val userIds: List<Int>,
