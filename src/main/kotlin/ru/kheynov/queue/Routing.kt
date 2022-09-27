@@ -11,6 +11,8 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
-        v1Routes()
+        route("/api") {
+            v1Routes()
+        }
     }
 }

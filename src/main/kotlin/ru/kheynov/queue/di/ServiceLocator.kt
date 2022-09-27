@@ -5,6 +5,7 @@ import org.litote.kmongo.reactivestreams.KMongo
 import ru.kheynov.queue.data.MongoRoomsRepositoryImpl
 import ru.kheynov.queue.data.MongoUserRepositoryImpl
 import ru.kheynov.queue.domain.use_cases.UseCases
+import ru.kheynov.queue.security.TokenVerifier
 
 
 object ServiceLocator {
@@ -20,4 +21,6 @@ object ServiceLocator {
         userRepository = userRepository,
         roomsRepository = roomsRepository
     )
+
+    val tokenVerifier = TokenVerifier()
 }
