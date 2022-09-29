@@ -72,7 +72,7 @@ private fun Route.deleteUser(
             call.respond(OK)
             return@delete
         }
-        call.respond(Conflict, "Cannot register user")
+        call.respond(Conflict, "Cannot delete user")
         return@delete
     }
 }
