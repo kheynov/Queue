@@ -6,10 +6,9 @@ import io.ktor.server.routing.*
 import ru.kheynov.queue.api.v1.v1Routes
 
 fun Application.configureRouting() {
-
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondText("Queues backend")
         }
         route("/api") {
             v1Routes()

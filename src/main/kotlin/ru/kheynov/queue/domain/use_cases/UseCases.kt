@@ -5,6 +5,7 @@ import ru.kheynov.queue.domain.repositories.UserRepository
 import ru.kheynov.queue.domain.use_cases.queues.*
 import ru.kheynov.queue.domain.use_cases.rooms.*
 import ru.kheynov.queue.domain.use_cases.users.DeleteUserUseCase
+import ru.kheynov.queue.domain.use_cases.users.GetUserRoomsUseCase
 import ru.kheynov.queue.domain.use_cases.users.RegisterUserUseCase
 
 class UseCases(
@@ -12,7 +13,7 @@ class UseCases(
     roomsRepository: RoomsRepository,
 ) {
     val registerUserUseCase = RegisterUserUseCase(userRepository)
-    val deleteUserUseCase = DeleteUserUseCase(userRepository)
+    val deleteUserUseCase = DeleteUserUseCase(userRepository, roomsRepository)
 
     val createRoomUseCase = CreateRoomUseCase(userRepository, roomsRepository)
     val deleteRoomUseCase = DeleteRoomUseCase(userRepository, roomsRepository)
