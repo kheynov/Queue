@@ -114,7 +114,7 @@ private fun Route.getRoomQueues(
                 return@get
             }
         }
-        when (val queues = getRoomQueuesUseCase(userId, request.roomId)) {
+        when (val result = getRoomQueuesUseCase(userId, request.roomId)) {
             GetRoomQueuesUseCase.Result.Forbidden -> {
                 call.respond(HttpStatusCode.Forbidden)
                 return@get
@@ -131,7 +131,7 @@ private fun Route.getRoomQueues(
             }
 
             is GetRoomQueuesUseCase.Result.Successful -> {
-                call.respond(OK, queues)
+                call.respond(OK, result.queues)
                 return@get
             }
 

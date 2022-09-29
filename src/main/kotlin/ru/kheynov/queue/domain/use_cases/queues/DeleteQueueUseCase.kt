@@ -20,7 +20,7 @@ class DeleteQueueUseCase(
         if (!userRepository.checkIfUserRegistered(userId)) return Result.UserNotExists
         val room = roomsRepository.getRoomById(roomId) ?: return Result.RoomNotExists
         val queue = room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
-        if (queue.userIds[0] != userId) return Result.Forbidden
+        if (queue.userIds[0] != userId && !room.adminIds.contains(userId)) return Result.Forbidden
         return if (roomsRepository.deleteQueueById(roomId, queueId)) Result.Successful else Result.Failed
     }
 }
