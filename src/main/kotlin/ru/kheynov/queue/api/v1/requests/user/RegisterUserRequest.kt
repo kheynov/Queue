@@ -1,4 +1,4 @@
-package ru.kheynov.queue.api.v1.requests
+package ru.kheynov.queue.api.v1.requests.user
 
 import kotlinx.serialization.Serializable
 

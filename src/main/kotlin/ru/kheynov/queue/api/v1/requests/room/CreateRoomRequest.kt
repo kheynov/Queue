@@ -1,4 +1,4 @@
-package ru.kheynov.queue.api.v1.requests
+package ru.kheynov.queue.api.v1.requests.room
 
 import kotlinx.serialization.Serializable
 import ru.kheynov.queue.domain.entities.RoomSettings
