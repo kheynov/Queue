@@ -19,8 +19,8 @@ class DeleteQueueUseCase(
     suspend operator fun invoke(userId: Int, roomId: Long, queueId: Int): Result {
         if (!userRepository.checkIfUserRegistered(userId)) return Result.UserNotExists
         val room = roomsRepository.getRoomById(roomId) ?: return Result.RoomNotExists
-        room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
-        if (!room.adminIds.contains(userId)) return Result.Forbidden
+        val queue = room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
+        if (queue.userIds[0] != userId) return Result.Forbidden
         return if (roomsRepository.deleteQueueById(roomId, queueId)) Result.Successful else Result.Failed
     }
 }

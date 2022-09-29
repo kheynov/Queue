@@ -38,14 +38,9 @@ private fun Route.createQueue(
             }
         }
 
-        when (createQueueUseCase(userId, request.roomId, request.queueId, request.name)) {
+        when (createQueueUseCase(userId, request.roomId, request.name)) {
             CreateQueueUseCase.Result.Failed -> {
                 call.respond(HttpStatusCode.Conflict, "Cannot create queue")
-                return@post
-            }
-
-            CreateQueueUseCase.Result.QueueAlreadyExists -> {
-                call.respond(HttpStatusCode.Conflict, "Queue already exists")
                 return@post
             }
 
@@ -213,6 +208,11 @@ private fun Route.joinQueue(
                 call.respond(HttpStatusCode.NotFound, "User not exists")
                 return@post
             }
+
+            JoinQueueUseCase.Result.AlreadyInQueue -> {
+                call.respond(HttpStatusCode.Conflict, "Already in queue")
+                return@post
+            }
         }
     }
 }
@@ -221,7 +221,7 @@ private fun Route.leaveQueue(
     leaveQueueUseCase: LeaveQueueUseCase,
     tokenVerifier: TokenVerifier = ServiceLocator.tokenVerifier,
 ) {
-    delete {
+    delete("/leave") {
         val request = call.receiveNullable<LeaveQueueRequest>() ?: run {
             call.respond(HttpStatusCode.BadRequest)
             return@delete
@@ -261,6 +261,11 @@ private fun Route.leaveQueue(
 
             LeaveQueueUseCase.Result.Successful -> {
                 call.respond(HttpStatusCode.OK)
+                return@delete
+            }
+
+            LeaveQueueUseCase.Result.UserNotInRoom -> {
+                call.respond(HttpStatusCode.BadRequest, "User not in room")
                 return@delete
             }
         }

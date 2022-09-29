@@ -27,11 +27,11 @@ class GetQueueDetailsUseCase(
         val queueDetails = QueueDetails(
             id = queue.id,
             name = queue.name,
-            users = queue.userIds.map {
-                val user = userRepository.getUserInfo(userId)
+            users = queue.userIds.map { id ->
+                val user = userRepository.getUserInfo(id)
                 UserDTO(
                     user?.name ?: return Result.Failed,
-                    userId
+                    id
                 )
             }
         )

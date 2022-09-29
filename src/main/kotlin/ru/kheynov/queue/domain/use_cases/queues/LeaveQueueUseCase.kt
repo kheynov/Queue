@@ -13,6 +13,7 @@ class LeaveQueueUseCase(
         object UserNotExists : Result
         object RoomNotExists : Result
         object QueueNotExists : Result
+        object UserNotInRoom : Result
         object Forbidden : Result
     }
 
@@ -20,7 +21,8 @@ class LeaveQueueUseCase(
         if (!userRepository.checkIfUserRegistered(userId)) return Result.UserNotExists
         val room = roomsRepository.getRoomById(roomId) ?: return Result.RoomNotExists
         if (!room.userIds.contains(userId)) return Result.Forbidden
-        room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
+        val queue = room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
+        if (!queue.userIds.contains(userId)) return Result.UserNotInRoom
         if (roomsRepository.deleteUserFromQueue(roomId, queueId, userId)) return Result.Successful
         return Result.Failed
     }

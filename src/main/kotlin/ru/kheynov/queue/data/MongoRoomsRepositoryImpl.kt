@@ -56,8 +56,8 @@ class MongoRoomsRepositoryImpl(
     }
 
     override suspend fun createQueue(roomId: Long, queue: Queue): Boolean {
-        if (rooms.findOne(Room::id eq roomId) == null) return false
-        val queuesList = rooms.findOne(Room::id eq roomId)?.queues?.toMutableList() ?: return false
+        val room = rooms.findOne(Room::id eq roomId) ?: return false
+        val queuesList = room.queues?.toMutableList() ?: mutableListOf()
         queuesList.add(queue)
         return rooms.updateOne(Room::id eq roomId, setValue(Room::queues, queuesList)).wasAcknowledged()
     }

@@ -13,6 +13,7 @@ class JoinQueueUseCase(
         object UserNotExists : Result
         object RoomNotExists : Result
         object QueueNotExists : Result
+        object AlreadyInQueue : Result
         object Forbidden : Result
     }
 
@@ -20,7 +21,8 @@ class JoinQueueUseCase(
         if (!userRepository.checkIfUserRegistered(userId)) return Result.UserNotExists
         val room = roomsRepository.getRoomById(roomId) ?: return Result.RoomNotExists
         if (!room.userIds.contains(userId)) return Result.Forbidden
-        room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
+        val queue = room.queues?.find { it.id == queueId } ?: return Result.QueueNotExists
+        if (queue.userIds.contains(userId)) return Result.AlreadyInQueue
         if (roomsRepository.addUsersToQueue(roomId, queueId, userId)) return Result.Successful
         return Result.Failed
     }

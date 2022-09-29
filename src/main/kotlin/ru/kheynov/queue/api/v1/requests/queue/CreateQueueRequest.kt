@@ -6,6 +6,5 @@ import kotlinx.serialization.Serializable
 data class CreateQueueRequest(
     val token: String,
     val roomId: Long,
-    val queueId: Int,
     val name: String,
 )

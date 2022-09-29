@@ -9,12 +9,14 @@ data class Queue(
     val userIds: List<Int>,
 )
 
+@Serializable
 data class QueueDetails(
     val id: Int,
     val name: String,
     val users: List<UserDTO>,
 )
 
+@Serializable
 data class QueueThumbnail(
     val id: Int,
     val name: String,
