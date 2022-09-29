@@ -8,8 +8,8 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import ru.kheynov.queue.api.v1.requests.RegisterUserRequest
-import ru.kheynov.queue.api.v1.requests.RequestWithToken
+import ru.kheynov.queue.api.v1.requests.user.RegisterUserRequest
+import ru.kheynov.queue.api.v1.requests.user.RequestWithToken
 import ru.kheynov.queue.di.ServiceLocator
 import ru.kheynov.queue.domain.entities.User
 import ru.kheynov.queue.domain.use_cases.UseCases

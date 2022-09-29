@@ -10,7 +10,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import ru.kheynov.queue.api.v1.requests.*
+import ru.kheynov.queue.api.v1.requests.room.*
 import ru.kheynov.queue.di.ServiceLocator
 import ru.kheynov.queue.domain.use_cases.UseCases
 import ru.kheynov.queue.domain.use_cases.rooms.*
@@ -136,7 +136,7 @@ private fun Route.getRoomQueues(
             }
 
             GetRoomQueuesUseCase.Result.UserNotExists -> {
-                call.respond(BadRequest, "User Not Exists")
+                call.respond(NotFound, "User Not Exists")
                 return@get
             }
         }

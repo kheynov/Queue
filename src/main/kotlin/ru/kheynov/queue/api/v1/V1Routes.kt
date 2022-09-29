@@ -1,6 +1,7 @@
 package ru.kheynov.queue.api.v1
 
 import io.ktor.server.routing.*
+import ru.kheynov.queue.api.v1.routing.queueRoutes
 import ru.kheynov.queue.api.v1.routing.roomRoutes
 import ru.kheynov.queue.api.v1.routing.userRoutes
 import ru.kheynov.queue.di.ServiceLocator
@@ -12,5 +13,6 @@ fun Route.v1Routes(
     route("/v1") {
         userRoutes(useCases)
         roomRoutes(useCases)
+        queueRoutes(useCases)
     }
 }
