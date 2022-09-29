@@ -73,7 +73,6 @@ or
 [
 	{
 		"id": 1,
-		"pass": "******",
 		"name": "English 22.10",
 		"user_ids": [
 			92610861,
