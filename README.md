@@ -68,8 +68,6 @@ body:
 
 Response: 200 OK
 body: 
-[]
-or
 [
 	{
 		"id": 1,
@@ -141,9 +139,7 @@ body:
 	"roomId": 1
 }
 
-Response: 204 No content
-or 
-200 OK
+Response: 204 No content / 200 OK
 body: 
 [
 	{
