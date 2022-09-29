@@ -3,21 +3,29 @@
 __Стек__: Kotlin, Ktor, MongoDB, Docker
 
 ---
-Запуск сервера в Docker compose:
+### Подготовка к запуску
+```shell
+cp .env.sample .env
+
+#отредактировать при необходимости
+nano .env
+```
+---
+### Запуск сервера в Docker compose:
 
 ```shell
     docker-compose up --build -d
 ```
 
 ---
-Пересборка сервера при необходимости:
+### Пересборка сервера при необходимости:
 
 ```shell
 ./gradlew buildFatJar
 ```
 
 ---
-Остановка сервера:
+### Остановка сервера:
 
 ```shell
 docker-compose down
