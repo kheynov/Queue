@@ -21,10 +21,11 @@ class GetUserRoomsUseCase(
         rooms.forEach { room ->
             if (!room.adminIds.contains(userId)) {
                 rooms[rooms.indexOf(room)] = room.copy(
-                    pass = Array(room.pass.length) { "*" }.joinToString("")
+                    pass = null
                 )
             }
         }
+
         return Result.Successful(rooms)
     }
 }

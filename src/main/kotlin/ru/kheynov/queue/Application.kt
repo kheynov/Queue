@@ -7,6 +7,8 @@ import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit =
@@ -40,8 +42,15 @@ fun Application.configureMonitoring() {
     }
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
-        json()
+        json(
+            Json {
+                prettyPrint = true
+                encodeDefaults = false
+                explicitNulls = false
+            }
+        )
     }
 }
