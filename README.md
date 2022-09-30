@@ -75,7 +75,6 @@ body:
 }
 
 Response: 200 OK
-body: 
 [
 	{
 		"id": 1,
@@ -148,7 +147,6 @@ body:
 }
 
 Response: 204 No content / 200 OK
-body: 
 [
 	{
 		"id": 1,
@@ -183,6 +181,31 @@ body:
 }
 
 Response: 200 OK / ...
+```
+
+### Сведения о комнате
+
+```http request
+GET /api/v1/room/
+body:
+{
+"token": "324rb234fwf2345rf",
+"roomId": 1
+}
+
+Response: 200 OK / ...
+{
+	"id": 1,
+	"name": "AVT-019",
+	"user_ids": [
+		92610861,
+		879988134,
+		48690
+	],
+	"admin_ids": [
+		92610861
+	]
+}
 ```
 
 3) Очереди
@@ -227,7 +250,6 @@ body:
 	"queueId" : 1
 }
 Response: 200 OK / 404 NotFound / ...
-body:
 {
 	"id": 1,
 	"name": "queue 1",
