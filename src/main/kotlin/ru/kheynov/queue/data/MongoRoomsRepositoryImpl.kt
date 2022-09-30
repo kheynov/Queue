@@ -102,6 +102,6 @@ class MongoRoomsRepositoryImpl(
 
     override suspend fun getLastQueueId(roomId: Long): Int {
         val queues = rooms.findOne(Room::id eq roomId)?.queues?.toMutableList() ?: return 0
-        return queues.lastIndex
+        return queues.last().id
     }
 }
