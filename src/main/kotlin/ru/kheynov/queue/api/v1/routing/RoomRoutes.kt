@@ -3,6 +3,8 @@ package ru.kheynov.queue.api.v1.routing
 import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import io.ktor.http.HttpStatusCode.Companion.Conflict
+import io.ktor.http.HttpStatusCode.Companion.Forbidden
+import io.ktor.http.HttpStatusCode.Companion.NoContent
 import io.ktor.http.HttpStatusCode.Companion.NotFound
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
@@ -25,6 +27,7 @@ fun Route.roomRoutes(
         getRoomQueues(useCases.getRoomQueuesUseCase)
         joinRoom(useCases.joinRoomsUseCase)
         leaveRoom(useCases.leaveRoomUseCase)
+        getRoomDetails(useCases.getRoomDetailsUseCase)
     }
 }
 
@@ -86,7 +89,7 @@ private fun Route.deleteRoom(
             }
 
             DeleteRoomUseCase.Result.Forbidden -> {
-                call.respond(HttpStatusCode.Forbidden)
+                call.respond(Forbidden)
                 return@delete
             }
 
@@ -116,12 +119,12 @@ private fun Route.getRoomQueues(
         }
         when (val result = getRoomQueuesUseCase(userId, request.roomId)) {
             GetRoomQueuesUseCase.Result.Forbidden -> {
-                call.respond(HttpStatusCode.Forbidden)
+                call.respond(Forbidden)
                 return@get
             }
 
             GetRoomQueuesUseCase.Result.Empty -> {
-                call.respond(HttpStatusCode.NoContent, "Empty")
+                call.respond(NoContent, "Empty")
                 return@get
             }
 
@@ -233,4 +236,47 @@ private fun Route.leaveRoom(
     }
 }
 
+private fun Route.getRoomDetails(
+    getRoomDetailsUseCase: GetRoomDetailsUseCase,
+    tokenVerifier: TokenVerifier = ServiceLocator.tokenVerifier,
+) {
+    get {
+        val request = call.receiveNullable<GetRoomDetailsRequest>() ?: run {
+            call.respond(BadRequest)
+            return@get
+        }
+        val userId = when (val verificationResult = tokenVerifier.verifyToken(request.token)) {
+            is TokenVerifier.Result.Correct -> verificationResult.userId
+            TokenVerifier.Result.Incorrect -> {
+                call.respond(BadRequest, "Invalid token")
+                return@get
+            }
+        }
+        when (val result = getRoomDetailsUseCase(userId, request.roomId)) {
+            GetRoomDetailsUseCase.Result.Failed -> {
+                call.respond(Conflict)
+                return@get
+            }
 
+            GetRoomDetailsUseCase.Result.Forbidden -> {
+                call.respond(Forbidden, "User not in room")
+                return@get
+            }
+
+            GetRoomDetailsUseCase.Result.RoomNotExists -> {
+                call.respond(NotFound, "Room not exists")
+                return@get
+            }
+
+            is GetRoomDetailsUseCase.Result.Successful -> {
+                call.respond(OK, result.room)
+                return@get
+            }
+
+            GetRoomDetailsUseCase.Result.UserNotExists -> {
+                call.respond(NotFound, "User not exists")
+                return@get
+            }
+        }
+    }
+}

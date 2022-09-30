@@ -27,4 +27,5 @@ class UseCases(
     val getRoomQueuesUseCase = GetRoomQueuesUseCase(userRepository, roomsRepository)
     val joinQueueUseCase = JoinQueueUseCase(userRepository, roomsRepository)
     val leaveQueueUseCase = LeaveQueueUseCase(userRepository, roomsRepository)
+    val getRoomDetailsUseCase = GetRoomDetailsUseCase(userRepository, roomsRepository)
 }
