@@ -195,15 +195,20 @@ body:
 
 Response: 200 OK / ...
 {
-	"id": 1,
-	"name": "AVT-019",
+	"id": 2,
+	"name": "AVT-018",
 	"user_ids": [
-		92610861,
-		879988134,
-		48690
+		{
+			"name": "Dmitry",
+			"vkID": 946852072
+		},
+		{
+			"name": "Viktor",
+			"vkID": 48690
+		}
 	],
 	"admin_ids": [
-		92610861
+		946852072
 	]
 }
 ```
