@@ -58,6 +58,11 @@ private fun Route.createQueue(
                 call.respond(HttpStatusCode.NotFound, "User not exists")
                 return@post
             }
+
+            CreateQueueUseCase.Result.Forbidden -> {
+                call.respond(HttpStatusCode.Forbidden, "User not in room")
+                return@post
+            }
         }
     }
 }

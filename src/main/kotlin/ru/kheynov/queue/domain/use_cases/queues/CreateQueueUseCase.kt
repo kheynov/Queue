@@ -14,10 +14,14 @@ class CreateQueueUseCase(
         object Failed : Result
         object UserNotExists : Result
         object RoomNotExists : Result
+        object Forbidden : Result
     }
 
     suspend operator fun invoke(userId: Int, roomId: Long, name: String): Result {
         if (!userRepository.checkIfUserRegistered(userId)) return Result.UserNotExists
+        val room = roomsRepository.getRoomById(roomId) ?: return Result.RoomNotExists
+
+        if (!room.userIds.contains(userId)) return Result.Forbidden
 
         val queue = Queue(
             id = roomsRepository.getLastQueueId(roomId) + 1, name = name, userIds = listOf(userId)
