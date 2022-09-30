@@ -14,3 +14,14 @@ data class Room(
     val announcements: List<Announcement>?,
     val queues: List<Queue>?,
 )
+@Serializable
+data class RoomDetails(
+    val id: Long,
+    val pass: String?,
+    val name: String,
+    @SerialName("user_ids") val users: List<UserDTO>,
+    @SerialName("admin_ids") val adminIds: List<Int>,
+    val settings: RoomSettings?,
+    val announcements: List<Announcement>?,
+    val queues: List<Queue>?,
+)
